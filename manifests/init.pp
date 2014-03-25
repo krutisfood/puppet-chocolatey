@@ -4,6 +4,7 @@ class chocolatey {
   exec { 
     'install-chocolatey':
       creates => 'C:\Chocolatey',
+      path    => $::path,
       command => 'cmd.exe /K @powershell -NoProfile -ExecutionPolicy unrestricted -Command "iex ((new-object net.webclient).DownloadString(\'https://chocolatey.org/install.ps1\'))"'
   } -> Package <| provider == chocolatey |>
   
