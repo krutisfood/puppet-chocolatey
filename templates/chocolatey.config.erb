@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<chocolatey>
+    <useNuGetForSources>false</useNuGetForSources>
+    <sources>
+    <% @choc_sources.each_pair do |key, source| -%>
+        <source id="<%= key %>" value="<%= source['value'] %>" />
+    <% end -%>
+    <% unless @choc_sources -%>
+        <source id="chocolatey" value="https://chocolatey.org/api/v2/" />
+    <% end -%>
+    </sources>
+</chocolatey>
