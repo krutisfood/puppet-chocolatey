@@ -1,6 +1,9 @@
 <?xml version="1.0"?>
 <chocolatey>
     <useNuGetForSources>false</useNuGetForSources>
+    <checksumFiles>true</checksumFiles>
+    <virusCheck>false</virusCheck>
+    <ksMessage>true</ksMessage>
     <sources>
     <% @choc_sources.each_pair do |key, source| -%>
         <source id="<%= key %>" value="<%= source['value'] %>" />
