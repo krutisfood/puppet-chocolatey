@@ -1,16 +1,20 @@
-<?xml version="1.0"?>
-<chocolatey>
-    <useNuGetForSources>false</useNuGetForSources>
-    <checksumFiles>true</checksumFiles>
-    <virusCheck>false</virusCheck>
-    <cacheLocation></cacheLocation>
-    <ksMessage>false</ksMessage>
-    <sources>
-    <% @choc_sources.each_pair do |key, source| -%>
-        <source id="<%= key %>" value="<%= source['value'] %>" />
+<?xml version="1.0" encoding="utf-8"?>
+<chocolatey xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <cacheLocation />
+  <containsLegacyPackageInstalls>true</containsLegacyPackageInstalls>
+  <commandExecutionTimeoutSeconds>2700</commandExecutionTimeoutSeconds>
+  <sources>
+    <% @sources.each_pair do |name, options| -%>
+      <source id="<%= name %>" value="<%= options[:source] %>" disabled="<%= options[:enabled] %>" />
     <% end -%>
-    <% unless @choc_sources -%>
-        <source id="chocolatey" value="https://chocolatey.org/api/v2/" />
+    <% if @sources.empty? -%>
+      <source id="chocolatey" value="https://chocolatey.org/api/v2/" disabled="false" />
     <% end -%>
-    </sources>
+  </sources>
+  <features>
+    <% @_features.each_pair do |feature, state| -%>
+      <feature name="<%= feature %>" enabled="<%= state %>" setExplicitly="true" />
+    <% end -%>
+  </features>
+  <apiKeys />
 </chocolatey>
