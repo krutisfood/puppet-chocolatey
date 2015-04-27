@@ -1,4 +1,4 @@
-choco sources remove chocolatey
+choco sources remove -name chocolatey
 <% @sources.each_pair do |name, source| -%>
 choco sources add -name <%= name %> -source <%= source %>
 <%end -%>
