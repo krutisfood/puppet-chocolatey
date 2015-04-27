@@ -28,6 +28,7 @@ class chocolatey (
   exec {
     'set-sources':
       path        => $::path,
+      provider    => powershell,
       command     => "C:/temp/set-sources.ps1",
       refreshonly => true,
       require     => File['C:/temp/set-sources.ps1']
