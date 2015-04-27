@@ -4,10 +4,6 @@ class chocolatey (
   $sources = { 'chocolatey' => 'https://chocolatey.org/api/v2/' }
   ){
 
-  file { 'C:/temp':
-    ensure => directory,
-  }
-
   file { 'C:/temp/install.ps1':
     ensure             => present,
     source             => 'puppet:///modules/chocolatey/install.ps1',
