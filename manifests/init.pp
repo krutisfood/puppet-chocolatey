@@ -4,34 +4,26 @@ class chocolatey (
   $sources = { 'chocolatey' => 'https://chocolatey.org/api/v2/' }
   ){
 
-  file { 'C:/temp/install.ps1':
-    ensure             => present,
-    source             => 'puppet:///modules/chocolatey/install.ps1',
+  $chocolatey_path = 'C:/ProgramData/chocolatey'
+
+  File {
     source_permissions => 'ignore',
+    ensure             => 'present'
   }
 
-  file { 'C:/temp/set-sources.ps1':
-    ensure             => present,
-    content            => template('chocolatey/set-sources.ps1.erb'),
-    source_permissions => 'ignore',
+  file { 'C:/temp/install.ps1':
+    source => 'puppet:///modules/chocolatey/install.ps1',
+  }
+
+  file { "${chocolatey_path}/chocolateyinstall/chocolatey.config":
+    content => template('chocolatey/chocolatey.config.erb'),
   }
 
   exec { 
     'install-chocolatey':
-      creates => 'C:/ProgramData/Chocolatey',
+      creates => $chocolatey_path,
       path    => $::path,
       command => 'cmd.exe /K @powershell -NoProfile -ExecutionPolicy unrestricted -Command "C:\temp\install.ps1"',
       require => File['C:/temp/install.ps1'],
-      notify  => Exec['set-sources']
-  }
-
-  exec {
-    'set-sources':
-      path        => $::path,
-      provider    => powershell,
-      command     => "C:/temp/set-sources.ps1",
-      refreshonly => true,
-      require     => File['C:/temp/set-sources.ps1']
   } -> Package <| provider == chocolatey |>
-
 }

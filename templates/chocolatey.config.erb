@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<chocolatey>
+  <useNuGetForSources>false</useNuGetForSources>
+  <checksumFiles>true</checksumFiles>
+  <virusCheck>false</virusCheck>
+  <cacheLocation></cacheLocation>
+  <ksMessage>false</ksMessage>
+  <sources>
+    <% @sources.each_pair do |name, url| -%>
+      <source id="<%= name %>" value="<%= url %>" />
+    <% end -%>
+  </sources>
+</chocolatey>
